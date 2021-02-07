@@ -1,12 +1,11 @@
 export const resolvers = {
   Query: {
-    ticket() {
-      return tickets[0]
-    }
+    ticket: (_: any, { id }: any) => tickets.find((u) => u.id === id),
+    tickets: () => tickets
   },
   Ticket: {
-    __resolveReference(object: {id: string, title: string}){
-      return tickets.find(ticket => ticket.id === object.id)
+    member(ticket: { id: string, title: string}) {
+      return { __typename: "Member", id: ticket.id };
     }
   }
 };
@@ -14,14 +13,17 @@ export const resolvers = {
 const tickets = [
   {
     id: "1",
-    title: 'ticket_01'
+    title: 'ticket_01',
+    assignees: {id: '1'}
   },
   {
     id: "2",
-    title: 'ticket_02'
+    title: 'ticket_02',
+    assignees: {id: '2'}
   },
   {
     id: "3",
-    title: 'ticket_03'
+    title: 'ticket_03',
+    assignees: {id: '3'}
   },
 ]
