@@ -4,7 +4,7 @@ export const resolvers = {
     members: () => members
   },
   Member: {
-    __resolveReference(object: {id: string, title: string}) {
+    __resolveReference(object: { __typename: 'Member', id: string }) {
       return members.find(member => member.id === object.id)
     }
   }
