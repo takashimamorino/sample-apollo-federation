@@ -3,24 +3,24 @@ const { buildFederatedSchema } = require('@apollo/federation');
 
 const typeDefs = gql`
   type Query {
-    me: User
+    ticket: Ticket
   }
 
-  type User @key(fields: "id") {
+  type Ticket @key(fields: "id") {
     id: ID!
-    username: String
+    title: String!
   }
 `;
 
 const resolvers = {
   Query: {
-    me() {
-      return { id: "1", username: "@ava" }
+    ticket() {
+      return tickets[0]
     }
   },
-  User: {
-    __resolveReference(user, { fetchUserById }){
-      return fetchUserById(user.id)
+  Ticket: {
+    __resolveReference(object){
+      return tickets.find(ticket => ticket.id === object.id)
     }
   }
 };
@@ -32,3 +32,18 @@ const server = new ApolloServer({
 server.listen(4001).then(({ url }) => {
     console.log(`🚀 Server ready at ${url}`);
 });
+
+const tickets = [
+  {
+    id: "1",
+    title: 'ticket_01'
+  },
+  {
+    id: "2",
+    title: 'ticket_02'
+  },
+  {
+    id: "3",
+    title: 'ticket_03'
+  },
+]
