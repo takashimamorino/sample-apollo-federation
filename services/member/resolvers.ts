@@ -1,11 +1,7 @@
 export const resolvers = {
   Query: {
-    member(id: string) {
-      return members.find(member => member.id === id)
-    },
-    members() {
-      return members
-    }
+    member: (_: any, { id }: any) => members.find(member => member.id === id),
+    members: () => members
   },
   Member: {
     __resolveReference(object: {id: string, title: string}) {
