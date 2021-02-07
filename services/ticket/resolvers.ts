@@ -5,7 +5,7 @@ export const resolvers = {
     }
   },
   Ticket: {
-    __resolveReference(object: any){
+    __resolveReference(object: {id: string, title: string}){
       return tickets.find(ticket => ticket.id === object.id)
     }
   }

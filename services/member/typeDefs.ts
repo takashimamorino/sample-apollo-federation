@@ -2,11 +2,11 @@ import { gql } from 'apollo-server'
 
 export const typeDefs = gql`
   type Query {
-    ticket: Ticket
+    member: Member
   }
 
-  type Ticket @key(fields: "id") {
+  type Member @key(fields: "id") {
     id: ID!
-    title: String!
+    name: String!
   }
 `;
