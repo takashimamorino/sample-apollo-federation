@@ -1,11 +1,12 @@
 const { ApolloServer, gql } = require('apollo-server');
+const { buildFederatedSchema } = require('@apollo/federation');
 
 const typeDefs = gql`
   type Query {
     me: User
   }
 
-  type User {
+  type User @key(fields: "id") {
     id: ID!
     username: String
   }
@@ -16,12 +17,16 @@ const resolvers = {
     me() {
       return { id: "1", username: "@ava" }
     }
+  },
+  User: {
+    __resolveReference(user, { fetchUserById }){
+      return fetchUserById(user.id)
+    }
   }
 };
 
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  schema: buildFederatedSchema([{ typeDefs, resolvers }])
 });
 
 server.listen(4001).then(({ url }) => {
