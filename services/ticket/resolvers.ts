@@ -1,6 +1,6 @@
 export const resolvers = {
   Query: {
-    ticket: (_: any, { id }: any) => tickets.find((u) => u.id === id),
+    ticket: (_: any, { id }: any) => tickets.find((ticket) => ticket.id === id),
     tickets: () => tickets
   },
   Ticket: {
